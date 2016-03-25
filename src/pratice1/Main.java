@@ -27,7 +27,7 @@ public abstract class Main
         //tai25b
         //sko90
         //tai150b
-        Parse data = new Parse("sko90");
+        Parse data = new Parse("tai25b");
         System.out.println("Greedy: " + TestSolution.test(Greedy.start(data),data));
         System.out.println("---------------------------------------");
         
