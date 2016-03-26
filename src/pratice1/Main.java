@@ -28,7 +28,7 @@ public abstract class Main
         //tai25b
         //sko90
         //tai150b
-        Parse data = new Parse("tai25b");
+        Parse data = new Parse("tai150b");
         System.out.println("Greedy: " + TestSolution.test(Greedy.start(data),data));
         System.out.println("---------------------------------------");
         
@@ -94,13 +94,8 @@ public abstract class Main
                 
                 for (int j = 0; j < 5; j++)
                 {
-                    System.out.println("Iteracion " + i+j + ": " + TestSolution.test(lsA.get(j).getSolution(), data));
+                    System.out.println("Iteracion " + (i+j) + ": " + TestSolution.test(lsA.get(j).getSolution(), data));
                 }
-                
-                
-                
-                
-                System.out.println("---------------------------------------");
             } catch (InterruptedException ex)
             {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
