@@ -5,6 +5,7 @@
  */
 package pratice1;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ public abstract class Main
         System.out.println("Greedy: " + TestSolution.test(Greedy.start(data),data));
         System.out.println("---------------------------------------");
         
+        /*
         for(int i = 0; i < 10; i++)
         {
             try
@@ -58,6 +60,43 @@ public abstract class Main
                 System.out.println("Busqueda local: " + TestSolution.test(ls.getSolution(), data));
                 System.out.println("Enfriamiento simulado: " + TestSolution.test(sa.getSolution() ,data));
                 System.out.println("Busqueda Tabu: " + TestSolution.test(ts.getSolution() ,data));
+                
+                
+                
+                System.out.println("---------------------------------------");
+            } catch (InterruptedException ex)
+            {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+*/
+        
+        ArrayList<LocalSearch> lsA;
+        
+        for(int i = 0; i < 10; i = i + 5)
+        {
+            lsA = new ArrayList();
+        
+            try
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    rnd = new Random();
+                    rnd.setSeed(i+j);
+                    lsA.add(new LocalSearch(data, rnd));
+                    lsA.get(j).start();
+                }
+                
+                for (int j = 0; j < 5; j++)
+                {
+                    lsA.get(j).join();
+                }
+                
+                for (int j = 0; j < 5; j++)
+                {
+                    System.out.println("Iteracion " + i+j + ": " + TestSolution.test(lsA.get(j).getSolution(), data));
+                }
+                
                 
                 
                 
