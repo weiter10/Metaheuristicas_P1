@@ -15,7 +15,7 @@ import parseLib.Parse;
  *
  * @author Manu
  */
-public class LocalSearch extends Thread
+public class LocalSearch extends Thread implements Searcheable
 {
     private final Parse data;
     private final Random rnd;
@@ -57,7 +57,7 @@ public class LocalSearch extends Thread
         }
         
         this.solution = bestSolution;
-        System.out.println("local");
+        //System.out.println("local");
     }
 
     

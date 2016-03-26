@@ -5,6 +5,7 @@
  */
 package pratice1;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ import parseLib.Parse;
  *
  * @author Manu
  */
-public class SimulatedAnnealing extends Thread
+public class SimulatedAnnealing extends Thread implements Searcheable
 {
     private final Parse data;
     private final Random rnd;
@@ -38,7 +39,7 @@ public class SimulatedAnnealing extends Thread
         int[] currentSolution, bestSolution;
         double t0, mu = 0.3, fi = 0.3, t, cost, value;
         int numPosiToChange = 20, numIterations = 80*data.getDistances().length;
-        Set<int[]> setSolutions;
+        ArrayList<int[]> setSolutions;
         //
         
         currentSolution = Greedy.start(data);
@@ -69,9 +70,10 @@ public class SimulatedAnnealing extends Thread
         }
         
         this.solution = bestSolution;
-        System.out.println("simutaled");
+        //System.out.println("simutaled");
     }
 
+    @Override
     public int[] getSolution() {
         return solution;
     }
@@ -120,11 +122,11 @@ public class SimulatedAnnealing extends Thread
     }
     */
     
-    private static Set<int[]> getSolutions(int numSolutions, int[] masterSolution, Random rnd)
+    private static ArrayList<int[]> getSolutions(int numSolutions, int[] masterSolution, Random rnd)
     {
         /*  Variables locales   */
         int[] newSolution;
-        Set<int[]> setSolutions = new HashSet();
+        ArrayList<int[]> setSolutions = new ArrayList();
         int value, index1, index2;
         Map<Integer,Integer> positions = new HashMap();
         Map<Integer,Boolean> positionUsed = new HashMap();

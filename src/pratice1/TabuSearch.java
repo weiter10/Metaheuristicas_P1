@@ -19,7 +19,7 @@ import parseLib.Parse;
  *
  * @author Manu
  */
-public class TabuSearch extends Thread
+public class TabuSearch extends Thread implements Searcheable
 {
     private final Parse data;
     private final Random rnd;
@@ -93,7 +93,7 @@ public class TabuSearch extends Thread
         
         
         this.solution = bestSolutionAll.getList();
-        System.out.println("tabu");
+        //System.out.println("tabu");
     }
 
     public int[] getSolution() {
