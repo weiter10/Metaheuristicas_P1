@@ -28,7 +28,7 @@ public abstract class Main
         //tai25b
         //sko90
         //tai150b
-        Parse data = new Parse("tai150b");
+        Parse data = new Parse("tai25b");
         System.out.println("Greedy: " + TestSolution.test(Greedy.start(data),data));
         System.out.println("---------------------------------------");
         
@@ -37,6 +37,7 @@ public abstract class Main
         {
             try
             {
+                mal, crear un random a cada objeto
                 rnd = new Random();
                 rnd.setSeed(i);
                 rs = new RandomSearch(data, rnd);
@@ -70,32 +71,30 @@ public abstract class Main
             }
         }
 */
+        int countI = 10, countJ = 5;
+        ArrayList<Thread> listA;
         
-        ArrayList<LocalSearch> lsA;
-        
-        for(int i = 0; i < 10; i = i + 5)
+        for(int i = 0; i < countI; i += 5)
         {
-            lsA = new ArrayList();
+            listA = new ArrayList();
         
             try
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < countJ; j++)
                 {
                     rnd = new Random();
                     rnd.setSeed(i+j);
-                    lsA.add(new LocalSearch(data, rnd));
-                    lsA.get(j).start();
+                    listA.add(new TabuSearch(data, rnd));
+                    listA.get(j).start();
                 }
                 
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < countJ; j++) listA.get(j).join();
+                
+                for (int j = 0; j < countJ; j++)
                 {
-                    lsA.get(j).join();
+                    System.out.println("Iteracion " + (i+j) + ": " + TestSolution.test(((Searcheable)(listA.get(j))).getSolution(), data));
                 }
                 
-                for (int j = 0; j < 5; j++)
-                {
-                    System.out.println("Iteracion " + (i+j) + ": " + TestSolution.test(lsA.get(j).getSolution(), data));
-                }
             } catch (InterruptedException ex)
             {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
