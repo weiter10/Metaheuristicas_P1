@@ -61,6 +61,7 @@ public class LocalSearch extends Thread implements Searcheable
     }
 
     
+    @Override
     public int[] getSolution()
     {
         return solution;

@@ -19,6 +19,7 @@ public abstract class Main
 {
     public static void main(String[] args)
     {
+        long initial, end;
         Random rnd;
         RandomSearch rs;
         LocalSearch ls;
@@ -29,7 +30,10 @@ public abstract class Main
         //sko90
         //tai150b
         Parse data = new Parse("tai25b");
+        initial = System.currentTimeMillis();
         System.out.println("Greedy: " + TestSolution.test(Greedy.start(data),data));
+        end = System.currentTimeMillis();
+        System.out.println("Tiempo: " + (end-initial));
         System.out.println("---------------------------------------");
         
         /*
@@ -71,15 +75,18 @@ public abstract class Main
             }
         }
 */
-        int countI = 10, countJ = 5;
+        
+        int countJ = 10;
+        int countI = countJ*1;
         ArrayList<Thread> listA;
         
-        for(int i = 0; i < countI; i += 5)
+        for(int i = 0; i < countI; i += countJ)
         {
             listA = new ArrayList();
         
             try
             {
+                initial = System.currentTimeMillis();
                 for (int j = 0; j < countJ; j++)
                 {
                     rnd = new Random();
@@ -90,10 +97,15 @@ public abstract class Main
                 
                 for (int j = 0; j < countJ; j++) listA.get(j).join();
                 
+                end = System.currentTimeMillis();
+                
                 for (int j = 0; j < countJ; j++)
                 {
-                    System.out.println("Iteracion " + (i+j) + ": " + TestSolution.test(((Searcheable)(listA.get(j))).getSolution(), data));
+                    //System.out.println("Iteracion " + (i+j) + ": " + TestSolution.test(((Searcheable)(listA.get(j))).getSolution(), data));
+                    System.out.println(TestSolution.test(((Searcheable)(listA.get(j))).getSolution(), data));
                 }
+                
+                System.out.println("Tiempo: " + (end-initial));
                 
             } catch (InterruptedException ex)
             {

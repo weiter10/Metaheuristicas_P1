@@ -74,7 +74,8 @@ public class SimulatedAnnealing extends Thread implements Searcheable
     }
 
     @Override
-    public int[] getSolution() {
+    public int[] getSolution()
+    {
         return solution;
     }
     
