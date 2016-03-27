@@ -29,7 +29,7 @@ public abstract class Main
         //tai25b
         //sko90
         //tai150b
-        Parse data = new Parse("tai25b");
+        Parse data = new Parse("sko90");
         initial = System.currentTimeMillis();
         System.out.println("Greedy: " + TestSolution.test(Greedy.start(data),data));
         end = System.currentTimeMillis();
