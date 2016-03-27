@@ -55,21 +55,17 @@ public class TabuSearch extends Thread implements Searcheable
         {
             value = rnd.nextDouble();
             
-            if(value < 0.25) resetBestSolution = new Solution(TabuSearch.getRandomSolution(data.getDistances().length, rnd));
+            if(value < 0.25 || bestSolutionAll == null)
+            {
+                resetBestSolution = new Solution(TabuSearch.getRandomSolution(data.getDistances().length, rnd));
+            }
             
             else if(value >= 0.25 && value < 0.75)
             {
-                if(bestSolutionAll == null) resetBestSolution = new Solution(TabuSearch.getRandomSolution(data.getDistances().length, rnd));
-                
-                else resetBestSolution = TabuSearch.getSolutionByFrequency(tabFrequency, rnd);
+                resetBestSolution = TabuSearch.getSolutionByFrequency(tabFrequency, rnd);
             }
             
-            else
-            {
-                if(bestSolutionAll == null) resetBestSolution = new Solution(TabuSearch.getRandomSolution(data.getDistances().length, rnd));
-                
-                else resetBestSolution = bestSolutionAll;
-            }
+            else resetBestSolution = bestSolutionAll;
             
             for (int j = 0; j < numIterations; j++)
             {
@@ -80,7 +76,10 @@ public class TabuSearch extends Thread implements Searcheable
                     bestSolutionAll = resetBestSolution;
                 }
                 
+                //Añadimos los movimientos tabu de la nueva solución
                 tabu.add(new TabuMovement(resetBestSolution.getMov()));
+                
+                //Actualizamos la tabla de frecuencias con la nueva solución
                 TabuSearch.updateTabFrequency(tabFrequency, resetBestSolution.getList());
             }
             
@@ -96,7 +95,9 @@ public class TabuSearch extends Thread implements Searcheable
         //System.out.println("tabu");
     }
 
-    public int[] getSolution() {
+    @Override
+    public int[] getSolution()
+    {
         return solution;
     }
     
