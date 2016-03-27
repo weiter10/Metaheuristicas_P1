@@ -7,12 +7,14 @@ package pratice1;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 import parseLib.Parse;
 
 /**
@@ -196,9 +198,11 @@ public class TabuSearch extends Thread implements Searcheable
         int[] list = new int[size], frequency, frequencyReduced;
         double[] vector;
         double value;
-        Map<Double,Integer> map = new HashMap();
+        Map<Double,Stack<Integer>> map = new HashMap();
+        Map<Double,Double> mapSum = new HashMap();
         Map<Integer,Integer> posiReal = new HashMap();
         PriorityQueue<Double> queue = new PriorityQueue();
+        PriorityQueue<Double> orderTemp = new PriorityQueue(Collections.reverseOrder());
         Set<Integer> invalidPositions = new HashSet();
         Set<Integer> posiVector = new HashSet();
         ArrayDeque<Integer> positions = new ArrayDeque();
@@ -238,27 +242,38 @@ public class TabuSearch extends Thread implements Searcheable
             vector = TabuSearch.getProbability(vector);
             value = 0;
             
+            //Almacenamos a que valor de probabilidad pertenece cada posición del vector
+            for (int j = 0; j < vector.length; j++)
+            {
+                if(!map.containsKey(vector[j])) map.put(vector[j], new Stack());
+                
+                map.get(vector[j]).push(j);
+                orderTemp.add(vector[j]);
+            }
+            
             //Creamos una estructura de datos para ordenar el vector
             for (int j = 0; j < vector.length; j++)
             {
-                value += vector[j];
+                value += orderTemp.peek();
+                mapSum.put(value, orderTemp.poll());
                 queue.add(value);
-                map.put(value, j);
             }
-                
+            
             //Tiramos el dado
             value = rnd.nextDouble();
 
             //Mientras el valor sea mayor que el elemento de la cola de prioridad (ordenada)
             //seguimos buscando
             while(value > queue.element()) queue.remove();
-
-            list[i] = posiReal.get(map.get(queue.element()));
             
+            list[i] = posiReal.get(map.get(mapSum.get(queue.element())).peek());
             invalidPositions.add(list[i]);
+            
             map.clear();
+            mapSum.clear();
             queue.clear();
             posiReal.clear();
+            orderTemp.clear();
         }
         
         return new Solution(list);
