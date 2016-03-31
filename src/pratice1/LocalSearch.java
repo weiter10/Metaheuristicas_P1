@@ -5,10 +5,15 @@
  */
 package pratice1;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import parseLib.Parse;
 
 /**
@@ -35,17 +40,21 @@ public class LocalSearch extends Thread implements Searcheable
         /*  Variables   */
         int[][] distances, flow;
         int[] randomSolution, currentSolution, previousSolution, bestSolution = null;
+        //ArrayList<Integer> trace = new ArrayList();
         
         distances = data.getDistances();
         flow = data.getFlow();
         //
         
         randomSolution = LocalSearch.getRandomSolution(distances.length, rnd);
+        //randomSolution = Greedy.start(data);
 
         currentSolution = randomSolution;
 
         do
         {
+            //Añadimos a la traza
+            //trace.add(TestSolution.test(currentSolution, data));
             previousSolution = currentSolution;
             currentSolution = LocalSearch.getBestNeighbour(previousSolution, data);
 
@@ -57,7 +66,8 @@ public class LocalSearch extends Thread implements Searcheable
         }
         
         this.solution = bestSolution;
-        //System.out.println("local");
+        
+        //WriteFile.write("traceBL.txt", trace);
     }
 
     

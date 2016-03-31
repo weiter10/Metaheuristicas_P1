@@ -40,6 +40,7 @@ public class SimulatedAnnealing extends Thread implements Searcheable
         double t0, mu = 0.3, fi = 0.3, t, cost, value;
         int numPosiToChange = 20, numIterations = 80*data.getDistances().length;
         ArrayList<int[]> setSolutions;
+        //ArrayList<Integer> trace = new ArrayList();
         //
         
         currentSolution = Greedy.start(data);
@@ -61,6 +62,7 @@ public class SimulatedAnnealing extends Thread implements Searcheable
                     if(TestSolution.test(bestSolution, data) > TestSolution.test(tempSolution, data)) bestSolution = tempSolution;
                     
                     currentSolution = tempSolution;
+                    //trace.add(TestSolution.test(currentSolution, data));
                 }
             }
             
@@ -70,7 +72,8 @@ public class SimulatedAnnealing extends Thread implements Searcheable
         }
         
         this.solution = bestSolution;
-        //System.out.println("simutaled");
+        
+        //WriteFile.write("traceES.txt", trace);
     }
 
     @Override

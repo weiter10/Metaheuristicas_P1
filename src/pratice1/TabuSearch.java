@@ -6,6 +6,7 @@
 package pratice1;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class TabuSearch extends Thread implements Searcheable
         int numSolutions, numIterations, numResets;
         double value;
         int[][] tabFrequency;
+        //ArrayList<Integer> trace = new ArrayList();
         //
         
         numSolutions = 40;
@@ -59,6 +61,8 @@ public class TabuSearch extends Thread implements Searcheable
             
             if(value < 0.25 || bestSolutionAll == null)
             {
+                //if(bestSolutionAll == null) resetBestSolution = new Solution(Greedy.start(data));
+                
                 resetBestSolution = new Solution(TabuSearch.getRandomSolution(data.getDistances().length, rnd));
             }
             
@@ -72,6 +76,7 @@ public class TabuSearch extends Thread implements Searcheable
             for (int j = 0; j < numIterations; j++)
             {
                 resetBestSolution = TabuSearch.getBestNeighbour(numSolutions, resetBestSolution, tabu, rnd, data);
+                //trace.add(TestSolution.test(resetBestSolution.getList(), data));
                 
                 if(bestSolutionAll == null || resetBestSolution.getGoodness(data) < bestSolutionAll.getGoodness(data))
                 {
@@ -94,7 +99,7 @@ public class TabuSearch extends Thread implements Searcheable
         
         
         this.solution = bestSolutionAll.getList();
-        //System.out.println("tabu");
+        //WriteFile.write("traceBT.txt", trace);
     }
 
     @Override
